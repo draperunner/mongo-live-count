@@ -8,13 +8,10 @@ const db = process.env.DB || 'test';
 const collection = process.env.COLLECTION || 'test';
 const port = process.env.PORT || 4321;
 
-// Turn 'tweets' into 'Tweet', for instance.
-const modelName = collection.charAt(0).toUpperCase() + collection.slice(1, -1)
-
 mongoAddress = 'mongodb://' + dbAddress + ':' + dbPort + '/' + db
 mongoose.connect(mongoAddress);
 const schema = new mongoose.Schema({}, { strict: false });
-const Coll = mongoose.model(modelName, schema);
+const Coll = mongoose.model(collection, schema, collection);
 
 app.use(express.static('client'))
 
