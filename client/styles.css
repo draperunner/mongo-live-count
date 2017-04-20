@@ -9,3 +9,11 @@ div {
   text-align: center;
   font-size: 100px;
 }
+
+#storage-size {
+  margin: 0;
+  position: relative;
+  top: 45%;
+  text-align: center;
+  color: grey;
+}

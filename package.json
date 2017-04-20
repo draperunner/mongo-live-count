@@ -10,6 +10,7 @@
   "author": "Mats Byrkjeland",
   "license": "MIT",
   "dependencies": {
+    "bytes": "^2.5.0",
     "express": "^4.15.2",
     "mongoose": "^4.9.5"
   },

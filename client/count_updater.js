@@ -7,7 +7,8 @@ setInterval(function () {
     .then(function (response) {
       return response.json();
     })
-    .then(function (count) {
-      document.getElementById("count").innerHTML = numberWithCommas(count);
+    .then(function (parsedResponse) {
+      document.getElementById("count").innerHTML = numberWithCommas(parsedResponse.count);
+      document.getElementById("storage-size").innerHTML = "That's " + parsedResponse.storageSize;
     })
   }, 1000);
