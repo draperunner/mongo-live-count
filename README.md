@@ -1,6 +1,7 @@
 # MongoDB Live Count
 
-A very simple web app showing the total number of documents in a MongoDB collection live. Count is updated every second.
+A very simple web app showing the total number of documents in a MongoDB collection live and its storage size.
+Count and storage size are updated every second.
 
 ![Screenshot GIF](recording.gif "Screenshot GIF")
 
