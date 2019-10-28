@@ -10,9 +10,9 @@
   "author": "Mats Byrkjeland",
   "license": "MIT",
   "dependencies": {
-    "bytes": "^2.5.0",
+    "bytes": "^3.1.0",
     "express": "^4.15.2",
-    "mongoose": "^4.9.5"
+    "mongoose": "^5.7.7"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
