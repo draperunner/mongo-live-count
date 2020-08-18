@@ -4,10 +4,8 @@ function numberWithCommas(x) {
 
 setInterval(function () {
   fetch('/count')
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (parsedResponse) {
+    .then((res) => res.json())
+    .then((parsedResponse) => {
       document.getElementById("count").innerHTML = numberWithCommas(parsedResponse.count);
       document.getElementById("storage-size").innerHTML = "That's " + parsedResponse.storageSize;
     })
