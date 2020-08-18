@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose');
+const { MongoClient } = require("mongodb");
 const bytes = require('bytes');
 
 const dbAddress = process.env.DB_ADDRESS || '127.0.0.1';
@@ -9,28 +9,33 @@ const db = process.env.DB || 'test';
 const collection = process.env.COLLECTION || 'test';
 const port = process.env.PORT || 4321;
 
-mongoAddress = 'mongodb://' + dbAddress + ':' + dbPort + '/' + db
-mongoose.connect(mongoAddress);
-const schema = new mongoose.Schema({}, { strict: false });
-const Coll = mongoose.model(collection, schema, collection);
+const mongoAddress = 'mongodb://' + dbAddress + ':' + dbPort + '/' + db
+let client
 
 app.use(express.static('client'))
 
-app.get('/count', function (req, res) {
-  Coll.count({}, (err, count) => {
-    if (err) {
-      return console.log("err");
-    };
-    Coll.collection.stats((error, stats) => {
-      if (error) {
-        return console.log(error);
-      };
-      res.json({count: count, storageSize: bytes.format(stats.storageSize, {unitSeparator: ' '})});
+app.get('/count', async (req, res) => {
+  try {
+    if (!client) {
+      client = await MongoClient.connect(mongoAddress)
+    }
+
+    const [count, stats] = await Promise.all([
+      client.db().collection(collection).estimatedDocumentCount(),
+      client.db().collection(collection).stats(),
+    ])
+
+    res.json({
+      count: count,
+      storageSize: bytes.format(stats.storageSize, { unitSeparator: ' ' })
     });
-  });
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: error.message })
+  }
 });
 
-app.listen(port, function () {
+app.listen(port, () => {
   console.log('Connected to MongoDB instance ' + mongoAddress + ', collection "' + collection + '"');
   console.log('Server listening on port ' + port);
 });
